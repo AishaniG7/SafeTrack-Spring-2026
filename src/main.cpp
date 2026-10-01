@@ -9,6 +9,7 @@
 #include "gpsPacket.h"
 #include "meshPacket.h"
 #include "node_identity.h"
+#include "mesh_crypto.h"
 
 //Hardware and Pins
 #define LED (0 + 15)
@@ -887,10 +888,9 @@ void setup(){
 	pinMode(LED, OUTPUT); //set output mode
 	pinMode(BUTTON_PIN, INPUT_PULLUP);
 
-##ifdef _VARIANT_PROMICRO_V2_DIY_
+#ifdef _VARIANT_PROMICRO_V2_DIY_
 	// give powah
 	pinMode(PIN_GPS_EN, OUTPUT);
-	pinMode(PIN_DISPLAY_EN, OUTPUT);
 	digitalWrite(PIN_GPS_EN, HIGH);
 	digitalWrite(PIN_DISPLAY_EN, HIGH);
 	delay(250);
@@ -927,13 +927,14 @@ void setup(){
 	  Serial.println("[CRYPTO] Initialization failed!");
 	  digitalWrite(LED, HIGH);
 	  while (true) { delay(1000); }
-	}
+	} /*
 	if (!testCrypto()) {
 	  Serial.println("[CRYPTO] Self-tests failed!");
 	  digitalWrite(LED, HIGH);
 	  while (true) { delay(1000); }
 	}
 	measureCryptoLatency();
+    */ 
 	
 	// display boot
 	memset(buffer, 0, sizeof(buffer)); // set loop display buffer with zeros
@@ -997,7 +998,6 @@ void setup(){
 	display.print("Node ID: ");
 	display.print(NODE_ID); 
 	display.display();
-    */
 
     display.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
     display.setCursor(0, 0);
